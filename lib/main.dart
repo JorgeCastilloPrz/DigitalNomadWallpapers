@@ -46,7 +46,7 @@ class _PhotoListState extends State<PhotoList> {
         _isLoading = false;
       });
     } else {
-      throw Exception('Failed to load photos');
+      throw Exception('Failed to load photos:' + response.body);
     }
   }
 
@@ -60,7 +60,7 @@ class _PhotoListState extends State<PhotoList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Failed to load photos"),
+          title: Text("Digital Nomad Wallpapers"),
         ),
         backgroundColor: Colors.black,
         body: _isLoading
