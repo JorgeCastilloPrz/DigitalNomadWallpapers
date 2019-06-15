@@ -6,7 +6,7 @@ This project showcases a complete architecture of a Flutter app for downloading 
 
 I'm using Redux.
 
-./raw/architecture.png
+![Architecture](./raw/architecture.png)
 
 ## License
 
