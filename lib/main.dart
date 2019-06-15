@@ -29,7 +29,7 @@ class PhotoList extends StatefulWidget {
 
 class _PhotoListState extends State<PhotoList> {
   List<Photo> _list = List();
-  var _isLoading = false;
+  var _isLoading = true;
 
   _fetchData() async {
     setState(() {
@@ -51,17 +51,16 @@ class _PhotoListState extends State<PhotoList> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("Failed to load photos"),
-        ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: RaisedButton(
-            child: new Text("Fetch Data"),
-            onPressed: _fetchData,
-          ),
         ),
         body: _isLoading
             ? Center(
