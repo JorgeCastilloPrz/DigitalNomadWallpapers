@@ -1,4 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import 'config/keys.dart';
+import 'photo.dart';
 
 void main() => runApp(DigitalNomadApp());
 
@@ -6,58 +13,73 @@ class DigitalNomadApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Digital Nomad Wallpapers',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Digital Nomad Wallpapers'),
+      home: PhotoList(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
+class PhotoList extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _PhotoListState createState() => _PhotoListState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _PhotoListState extends State<PhotoList> {
+  List<Photo> _list = List();
+  var _isLoading = false;
 
-  void _incrementCounter() {
+  _fetchData() async {
     setState(() {
-      _counter++;
+      _isLoading = true;
     });
+    final response = await http.get(
+        "https://api.pexels.com/v1/search?query=digital+nomad&per_page=30&page=1",
+        headers: {HttpHeaders.authorizationHeader: pexelsApiKey});
+    if (response.statusCode == 200) {
+      _list = (json.decode(response.body)["photos"] as List)
+          .map((data) => new Photo.fromJson(data))
+          .toList();
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      throw Exception('Failed to load photos');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+        appBar: AppBar(
+          title: Text("Failed to load photos"),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-    );
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: RaisedButton(
+            child: new Text("Fetch Data"),
+            onPressed: _fetchData,
+          ),
+        ),
+        body: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
+                itemCount: _list.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    contentPadding: EdgeInsets.all(10.0),
+                    title: new Text(_list[index].photographer),
+                    trailing: new Image.network(
+                      _list[index].large2x,
+                      fit: BoxFit.cover,
+                      height: 40.0,
+                      width: 40.0,
+                    ),
+                  );
+                }));
   }
 }
