@@ -62,23 +62,26 @@ class _PhotoListState extends State<PhotoList> {
         appBar: AppBar(
           title: Text("Failed to load photos"),
         ),
+        backgroundColor: Colors.black,
         body: _isLoading
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : ListView.builder(
-                itemCount: _list.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    contentPadding: EdgeInsets.all(10.0),
-                    title: new Text(_list[index].photographer),
-                    trailing: new Image.network(
-                      _list[index].large2x,
-                      fit: BoxFit.cover,
-                      height: 40.0,
-                      width: 40.0,
-                    ),
-                  );
-                }));
+            : Padding(
+            padding: EdgeInsets.all(2.0),
+            child: GridView.builder(
+              itemCount: _list.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.all(1.0),
+                  child: new Image.network(
+                    _list[index].large,
+                    fit: BoxFit.cover,
+                  ),
+                );
+              },
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, childAspectRatio: 0.6),
+            )));
   }
 }
