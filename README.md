@@ -2,6 +2,12 @@
 
 This project showcases a complete architecture of a Flutter app for downloading development related wallpapers.
 
+## Architecture
+
+I'm using Redux.
+
+./raw/architecture.png
+
 ## License
 
     Copyright 2019 Jorge Castillo Pérez

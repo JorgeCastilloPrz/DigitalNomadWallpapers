@@ -1,13 +1,26 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:digital_nomad_wallpapers/actions/actions.dart';
+import 'package:digital_nomad_wallpapers/models/models.dart';
+import 'package:digital_nomad_wallpapers/reducers/app_reducer.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
 import 'config/keys.dart';
 import 'photo.dart';
 
-void main() => runApp(DigitalNomadApp());
+void main() {
+  final store = Store<AppState>(
+    appReducer,
+    initialState: AppState(photos: List()),
+  );
+
+  print('Initial state: ${store.state}');
+
+  runApp(StoreProvider(store: store, child: DigitalNomadApp()));
+}
 
 class DigitalNomadApp extends StatelessWidget {
   @override
@@ -31,33 +44,16 @@ class _PhotoListState extends State<PhotoList> {
   List<Photo> _list = List();
   var _isLoading = true;
 
-  _fetchData() async {
+  @override
+  Widget build(BuildContext context) {
     setState(() {
       _isLoading = true;
     });
-    final response = await http.get(
-        "https://api.pexels.com/v1/search?query=digital+nomad&per_page=30&page=1",
-        headers: {HttpHeaders.authorizationHeader: pexelsApiKey});
-    if (response.statusCode == 200) {
-      _list = (json.decode(response.body)["photos"] as List)
-          .map((data) => new Photo.fromJson(data))
-          .toList();
-      setState(() {
-        _isLoading = false;
-      });
-    } else {
-      throw Exception('Failed to load photos:' + response.body);
-    }
-  }
+    StoreProvider.of<AppState>(context).dispatch(LoadPhotosAction());
+    setState(() {
+      _isLoading = false;
+    });
 
-  @override
-  void initState() {
-    super.initState();
-    _fetchData();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("Digital Nomad Wallpapers"),
@@ -68,20 +64,20 @@ class _PhotoListState extends State<PhotoList> {
                 child: CircularProgressIndicator(),
               )
             : Padding(
-            padding: EdgeInsets.all(2.0),
-            child: GridView.builder(
-              itemCount: _list.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: EdgeInsets.all(1.0),
-                  child: new Image.network(
-                    _list[index].large,
-                    fit: BoxFit.cover,
-                  ),
-                );
-              },
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, childAspectRatio: 0.6),
-            )));
+                padding: EdgeInsets.all(2.0),
+                child: GridView.builder(
+                  itemCount: _list.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.all(1.0),
+                      child: new Image.network(
+                        _list[index].large,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3, childAspectRatio: 0.6),
+                )));
   }
 }
