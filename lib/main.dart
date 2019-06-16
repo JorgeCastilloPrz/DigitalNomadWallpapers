@@ -1,5 +1,4 @@
 import 'package:digital_nomad_wallpapers/actions/app_state_actions.dart';
-import 'package:digital_nomad_wallpapers/actions/view_state_actions.dart';
 import 'package:digital_nomad_wallpapers/models/models.dart';
 import 'package:digital_nomad_wallpapers/reducers/app_reducer.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +36,6 @@ class PhotoList extends StatefulWidget {
 }
 
 class _PhotoListState extends State<PhotoList> {
-
   void loadPhotos() {
     Store<AppState> store = StoreProvider.of<AppState>(context);
     store.dispatch(fetchPhotosThunkAction);
