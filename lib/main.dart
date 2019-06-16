@@ -1,23 +1,19 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:digital_nomad_wallpapers/actions/actions.dart';
+import 'package:digital_nomad_wallpapers/actions/app_state_actions.dart';
+import 'package:digital_nomad_wallpapers/actions/view_state_actions.dart';
 import 'package:digital_nomad_wallpapers/models/models.dart';
 import 'package:digital_nomad_wallpapers/reducers/app_reducer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_logging/redux_logging.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
-import 'config/keys.dart';
 import 'photo.dart';
 
 void main() {
-  final store = Store<AppState>(
-    appReducer,
-    initialState: AppState(photos: List()),
-  );
-
-  print('Initial state: ${store.state}');
+  final store = Store<AppState>(appReducer,
+      initialState: AppState(photos: List(), isPhotosListLoading: false),
+      middleware: [new LoggingMiddleware.printer(), thunkMiddleware]);
 
   runApp(StoreProvider(store: store, child: DigitalNomadApp()));
 }
@@ -41,43 +37,49 @@ class PhotoList extends StatefulWidget {
 }
 
 class _PhotoListState extends State<PhotoList> {
-  List<Photo> _list = List();
-  var _isLoading = true;
+
+  void loadPhotos() {
+    Store<AppState> store = StoreProvider.of<AppState>(context);
+    store.dispatch(fetchPhotosThunkAction);
+  }
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      _isLoading = true;
-    });
-    StoreProvider.of<AppState>(context).dispatch(LoadPhotosAction());
-    setState(() {
-      _isLoading = false;
-    });
-
+    loadPhotos();
     return Scaffold(
         appBar: AppBar(
           title: Text("Digital Nomad Wallpapers"),
         ),
         backgroundColor: Colors.black,
-        body: _isLoading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : Padding(
-                padding: EdgeInsets.all(2.0),
-                child: GridView.builder(
-                  itemCount: _list.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.all(1.0),
-                      child: new Image.network(
-                        _list[index].large,
-                        fit: BoxFit.cover,
-                      ),
-                    );
-                  },
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, childAspectRatio: 0.6),
-                )));
+        body: StoreConnector<AppState, bool>(
+            converter: (store) => store.state.isPhotosListLoading,
+            builder: (_, isLoading) {
+              return isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Padding(
+                      padding: EdgeInsets.all(2.0),
+                      child: StoreConnector<AppState, List<Photo>>(
+                        converter: (store) => store.state.photos,
+                        builder: (_, photos) {
+                          return GridView.builder(
+                            itemCount: photos.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: EdgeInsets.all(1.0),
+                                child: new Image.network(
+                                  photos[index].large,
+                                  fit: BoxFit.cover,
+                                ),
+                              );
+                            },
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3, childAspectRatio: 0.6),
+                          );
+                        },
+                      ));
+            }));
   }
 }
