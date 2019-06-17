@@ -36,11 +36,6 @@ class PhotoList extends StatefulWidget {
 }
 
 class _PhotoListState extends State<PhotoList> {
-  void loadPhotos() {
-    Store<AppState> store = StoreProvider.of<AppState>(context);
-    store.dispatch(fetchPhotosThunkAction);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +45,7 @@ class _PhotoListState extends State<PhotoList> {
         backgroundColor: Colors.black,
         body: StoreConnector<AppState, bool>(
             converter: (store) => store.state.isPhotosListLoading,
-            onInit: (store) => loadPhotos(),
+            onInit: (store) => store.dispatch(fetchPhotosThunkAction),
             distinct: true,
             builder: (_, isLoading) {
               return isLoading
