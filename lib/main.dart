@@ -43,7 +43,6 @@ class _PhotoListState extends State<PhotoList> {
 
   @override
   Widget build(BuildContext context) {
-    loadPhotos();
     return Scaffold(
         appBar: AppBar(
           title: Text("Digital Nomad Wallpapers"),
@@ -51,6 +50,8 @@ class _PhotoListState extends State<PhotoList> {
         backgroundColor: Colors.black,
         body: StoreConnector<AppState, bool>(
             converter: (store) => store.state.isPhotosListLoading,
+            onInit: (store) => loadPhotos(),
+            distinct: true,
             builder: (_, isLoading) {
               return isLoading
                   ? Center(
