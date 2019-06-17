@@ -45,7 +45,9 @@ class _PhotoListState extends State<PhotoList> {
         backgroundColor: Colors.black,
         body: StoreConnector<AppState, bool>(
             converter: (store) => store.state.isPhotosListLoading,
-            onInit: (store) => store.dispatch(fetchPhotosThunkAction),
+            onInit: (store) {
+              store.dispatch(fetchPhotosAction());
+            },
             distinct: true,
             builder: (_, isLoading) {
               return isLoading
