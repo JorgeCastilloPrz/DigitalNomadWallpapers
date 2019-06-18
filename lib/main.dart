@@ -1,18 +1,28 @@
 import 'package:digital_nomad_wallpapers/actions/app_state_actions.dart';
+import 'package:digital_nomad_wallpapers/data/network/PhotosApiClient.dart';
+import 'package:digital_nomad_wallpapers/di/dependency_graph.dart';
+import 'package:digital_nomad_wallpapers/di/middleware_injector.dart';
 import 'package:digital_nomad_wallpapers/models/models.dart';
 import 'package:digital_nomad_wallpapers/reducers/app_reducer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
-import 'package:redux_thunk/redux_thunk.dart';
 
+import 'data/PhotosRepository.dart';
 import 'photo.dart';
 
 void main() {
+  final middleWare = InjectedMiddleware<DependencyGraph>(
+      deps: DependencyGraph(
+          photosRepo: PhotosRepository(client: PhotosApiClient())));
+
   final store = Store<AppState>(appReducer,
       initialState: AppState(photos: List(), isPhotosListLoading: false),
-      middleware: [new LoggingMiddleware.printer(), thunkMiddleware]);
+      middleware: [
+        new LoggingMiddleware.printer(),
+        middleWare.thunkMiddlewareInjector
+      ]);
 
   runApp(StoreProvider(store: store, child: DigitalNomadApp()));
 }

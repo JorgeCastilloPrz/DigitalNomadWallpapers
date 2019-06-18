@@ -6,9 +6,7 @@ import 'package:digital_nomad_wallpapers/photo.dart';
 import 'network/PhotosApiClient.dart';
 
 class PhotosRepository {
-  const PhotosRepository([
-    this.client = const PhotosApiClient(),
-  ]);
+  const PhotosRepository({this.client});
 
   final PhotosApiClient client;
 
