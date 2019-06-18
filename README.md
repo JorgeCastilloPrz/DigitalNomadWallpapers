@@ -4,7 +4,7 @@ This project showcases a complete architecture of a Flutter app for downloading 
 
 ## Architecture
 
-I'm using Redux.
+I'm using Redux here. I'll give details about the process in a blogpost in [jorgecastillo.dev](https://jorgecastillo.dev) soon.
 
 ![Architecture](./raw/architecture.png)
 
