@@ -1,3 +1,5 @@
+[![Build Status](https://app.bitrise.io/app/6185d9d3ce69c023/status.svg?token=rHL3hqG40OSzOhg0mIO6Zw)](https://app.bitrise.io/app/6185d9d3ce69c023)
+
 # digital_nomad_wallpapers
 
 This project showcases a complete architecture of a Flutter app for downloading development related wallpapers.
