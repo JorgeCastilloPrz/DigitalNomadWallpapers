@@ -2,7 +2,6 @@ import 'package:digital_nomad_wallpapers/actions/app_state_actions.dart';
 import 'package:digital_nomad_wallpapers/data/network/PhotosApiClient.dart';
 import 'package:digital_nomad_wallpapers/di/dependency_graph.dart';
 import 'package:digital_nomad_wallpapers/di/middleware_injector.dart';
-import 'package:digital_nomad_wallpapers/models/models.dart';
 import 'package:digital_nomad_wallpapers/reducers/app_reducer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -10,6 +9,8 @@ import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 
 import 'data/PhotosRepository.dart';
+import 'detail/PhotoDetail.dart';
+import 'models/app_state.dart';
 import 'photo.dart';
 
 void main() {
@@ -72,13 +73,16 @@ class _PhotoListState extends State<PhotoList> {
                           return GridView.builder(
                             itemCount: photos.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: EdgeInsets.all(1.0),
-                                child: new Image.network(
-                                  photos[index].large,
-                                  fit: BoxFit.cover,
-                                ),
-                              );
+                              final photoUrl = photos[index].portrait;
+                              return InkWell(
+                                  onTap: () => _routeToPhotoDetail(photoUrl),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(1.0),
+                                    child: new Image.network(
+                                      photoUrl,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ));
                             },
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
@@ -87,5 +91,14 @@ class _PhotoListState extends State<PhotoList> {
                         },
                       ));
             }));
+  }
+
+  _routeToPhotoDetail(String photoUrl) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PhotoDetail(photoUrl: photoUrl),
+      ),
+    );
   }
 }
