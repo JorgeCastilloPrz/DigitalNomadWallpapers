@@ -1,4 +1,5 @@
 import 'package:digital_nomad_wallpapers/actions/app_state_actions.dart';
+import 'package:digital_nomad_wallpapers/data/memory/PhotosMemoryCache.dart';
 import 'package:digital_nomad_wallpapers/data/network/PhotosApiClient.dart';
 import 'package:digital_nomad_wallpapers/di/dependency_graph.dart';
 import 'package:digital_nomad_wallpapers/di/middleware_injector.dart';
@@ -16,7 +17,8 @@ import 'photo.dart';
 void main() {
   final middleWare = InjectedMiddleware<DependencyGraph>(
       deps: DependencyGraph(
-          photosRepo: PhotosRepository(client: PhotosApiClient())));
+          photosRepo: PhotosRepository(
+              apiClient: PhotosApiClient(), memoryCache: PhotosMemoryCache())));
 
   final store = Store<AppState>(appReducer,
       initialState: AppState(photos: List(), isPhotosListLoading: false),

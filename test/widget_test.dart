@@ -6,6 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:digital_nomad_wallpapers/data/PhotosRepository.dart';
+import 'package:digital_nomad_wallpapers/data/memory/PhotosMemoryCache.dart';
 import 'package:digital_nomad_wallpapers/di/dependency_graph.dart';
 import 'package:digital_nomad_wallpapers/di/middleware_injector.dart';
 import 'package:digital_nomad_wallpapers/main.dart';
@@ -24,7 +25,9 @@ void main() {
       (WidgetTester tester) async {
     final middleWare = InjectedMiddleware<DependencyGraph>(
         deps: DependencyGraph(
-            photosRepo: PhotosRepository(client: StubPhotosApiClient())));
+            photosRepo: PhotosRepository(
+                apiClient: StubPhotosApiClient(),
+                memoryCache: PhotosMemoryCache())));
 
     final store = Store<AppState>(appReducer,
         initialState: AppState(photos: List(), isPhotosListLoading: false),
