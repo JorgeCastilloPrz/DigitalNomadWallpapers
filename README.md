@@ -6,7 +6,7 @@ This project showcases a complete architecture of a Flutter app for downloading 
 
 ## Architecture
 
-I'm using Redux here. I'll give details about the process in a blogpost in [jorgecastillo.dev](https://jorgecastillo.dev) soon.
+I'm using Redux here. You have a detailed blogpost describing it in [jorgecastillo.dev](https://jorgecastillo.dev/flutter-end-to-end-testable-architecture-using-redux).
 
 ![Architecture](./raw/architecture.png)
 
