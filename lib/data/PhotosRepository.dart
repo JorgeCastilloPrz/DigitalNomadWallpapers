@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:digital_nomad_wallpapers/data/memory/PhotosMemoryCache.dart';
-import 'package:digital_nomad_wallpapers/photo.dart';
+import 'package:digital_nomad_wallpapers/models/photo.dart';
 
 import 'network/PhotosApiClient.dart';
 

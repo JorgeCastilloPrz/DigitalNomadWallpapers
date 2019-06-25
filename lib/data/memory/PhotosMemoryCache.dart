@@ -1,4 +1,4 @@
-import '../../photo.dart';
+import 'package:digital_nomad_wallpapers/models/photo.dart';
 
 class PhotosMemoryCache {
   final List<Photo> _photos = List();

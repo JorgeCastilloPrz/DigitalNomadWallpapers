@@ -1,5 +1,5 @@
 import 'package:digital_nomad_wallpapers/data/network/PhotosApiClient.dart';
-import 'package:digital_nomad_wallpapers/photo.dart';
+import 'package:digital_nomad_wallpapers/models/photo.dart';
 import 'package:http/http.dart';
 
 class StubPhotosApiClient extends PhotosApiClient {

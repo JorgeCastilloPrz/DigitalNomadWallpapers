@@ -1,14 +1,14 @@
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
-import '../photo.dart';
+import 'package:digital_nomad_wallpapers/models/photo.dart';
 
 @immutable
-class AppState {
+class PhotosListState {
   final List<Photo> photos;
   final bool isPhotosListLoading;
 
-  const AppState({@required this.photos, @required this.isPhotosListLoading});
+  const PhotosListState({@required this.photos, @required this.isPhotosListLoading});
 
   @override
   String toString() {
@@ -18,7 +18,7 @@ class AppState {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AppState &&
+      other is PhotosListState &&
           runtimeType == other.runtimeType &&
           ListEquality().equals(photos, other.photos) &&
           isPhotosListLoading == other.isPhotosListLoading;

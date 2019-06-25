@@ -1,10 +1,13 @@
-import 'package:digital_nomad_wallpapers/models/models.dart';
-import 'package:digital_nomad_wallpapers/reducers/photos_list_view_state_reducer.dart';
-import 'package:digital_nomad_wallpapers/reducers/photos_reducer.dart';
+import 'package:digital_nomad_wallpapers/reducers/photo_detail_reducer.dart';
+import 'package:digital_nomad_wallpapers/reducers/photos_list_reducer.dart';
+import 'package:digital_nomad_wallpapers/store/app_state.dart';
 
-AppState appReducer(AppState state, action) {
+import 'navigation_reducer.dart';
+
+AppState appReducer(AppState currentState, action) {
   return AppState(
-      photos: photosReducer(state.photos, action),
-      isPhotosListLoading:
-          photosListViewStateReducer(state.isPhotosListLoading, action));
+      photosListState: photosListReducer(currentState.photosListState, action),
+      photoDetailState:
+          photoDetailReducer(currentState.photoDetailState, action),
+      navigationState: navigationReducer(currentState.navigationState, action));
 }
