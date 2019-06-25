@@ -1,14 +1,14 @@
 import 'package:collection/collection.dart';
+import 'package:digital_nomad_wallpapers/common/models/photo.dart';
 import 'package:meta/meta.dart';
-
-import 'package:digital_nomad_wallpapers/models/photo.dart';
 
 @immutable
 class PhotosListState {
   final List<Photo> photos;
   final bool isPhotosListLoading;
 
-  const PhotosListState({@required this.photos, @required this.isPhotosListLoading});
+  const PhotosListState(
+      {@required this.photos, @required this.isPhotosListLoading});
 
   @override
   String toString() {

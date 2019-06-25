@@ -1,4 +1,4 @@
-import 'package:digital_nomad_wallpapers/store/app_state.dart';
+import 'package:digital_nomad_wallpapers/app/store/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 

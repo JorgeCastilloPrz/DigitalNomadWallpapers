@@ -1,5 +1,5 @@
 import 'package:digital_nomad_wallpapers/navigation/actions/navigation_actions.dart';
-import 'package:digital_nomad_wallpapers/store/navigation_state.dart';
+import 'package:digital_nomad_wallpapers/navigation/store/navigation_state.dart';
 import 'package:redux/redux.dart';
 
 final navigationReducer = combineReducers<NavigationState>([

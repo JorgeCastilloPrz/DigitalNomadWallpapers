@@ -1,6 +1,6 @@
-import 'package:digital_nomad_wallpapers/store/navigation_state.dart';
-import 'package:digital_nomad_wallpapers/store/photo_detail_state.dart';
-import 'package:digital_nomad_wallpapers/store/photos_list_state.dart';
+import 'package:digital_nomad_wallpapers/navigation/store/navigation_state.dart';
+import 'package:digital_nomad_wallpapers/photodetail/store/photo_detail_state.dart';
+import 'package:digital_nomad_wallpapers/photoslist/store/photos_list_state.dart';
 import 'package:meta/meta.dart';
 
 @immutable

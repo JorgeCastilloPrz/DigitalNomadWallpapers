@@ -1,7 +1,7 @@
-import 'package:digital_nomad_wallpapers/store/app_state.dart';
+import 'package:digital_nomad_wallpapers/app/store/app_state.dart';
 import 'package:redux/redux.dart';
 
-import '../main.dart';
+import 'package:digital_nomad_wallpapers/app/main.dart';
 import 'actions/navigation_actions.dart';
 
 List<Middleware<AppState>> createNavigationMiddleware() {

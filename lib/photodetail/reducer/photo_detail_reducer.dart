@@ -1,5 +1,5 @@
-import 'package:digital_nomad_wallpapers/actions/app_state_actions.dart';
-import 'package:digital_nomad_wallpapers/store/photo_detail_state.dart';
+import 'package:digital_nomad_wallpapers/photodetail/actions/photo_detail_actions.dart';
+import 'package:digital_nomad_wallpapers/photodetail/store/photo_detail_state.dart';
 import 'package:redux/redux.dart';
 
 final photoDetailReducer =

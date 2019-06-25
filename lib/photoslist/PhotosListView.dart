@@ -1,9 +1,10 @@
-import 'package:digital_nomad_wallpapers/actions/app_state_actions.dart';
+import 'package:digital_nomad_wallpapers/app/store/app_state.dart';
+import 'package:digital_nomad_wallpapers/common/models/photo.dart';
 import 'package:digital_nomad_wallpapers/common/view/ProgressLoader.dart';
-import 'package:digital_nomad_wallpapers/models/photo.dart';
 import 'package:digital_nomad_wallpapers/navigation/actions/navigation_actions.dart';
 import 'package:digital_nomad_wallpapers/navigation/routes/app_routes.dart';
-import 'package:digital_nomad_wallpapers/store/app_state.dart';
+import 'package:digital_nomad_wallpapers/photodetail/actions/photo_detail_actions.dart';
+import 'package:digital_nomad_wallpapers/photoslist/actions/photo_list_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';

@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:digital_nomad_wallpapers/data/memory/PhotosMemoryCache.dart';
-import 'package:digital_nomad_wallpapers/models/photo.dart';
+import 'package:digital_nomad_wallpapers/common/models/photo.dart';
 
+import 'memory/PhotosMemoryCache.dart';
 import 'network/PhotosApiClient.dart';
 
 class PhotosRepository {

@@ -1,4 +1,4 @@
-import 'package:digital_nomad_wallpapers/data/PhotosRepository.dart';
+import 'package:digital_nomad_wallpapers/photoslist/data/PhotosRepository.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable

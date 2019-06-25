@@ -1,21 +1,20 @@
-import 'package:digital_nomad_wallpapers/data/memory/PhotosMemoryCache.dart';
-import 'package:digital_nomad_wallpapers/data/network/PhotosApiClient.dart';
+import 'package:digital_nomad_wallpapers/app/reducers/app_reducer.dart';
+import 'package:digital_nomad_wallpapers/app/store/app_state.dart';
 import 'package:digital_nomad_wallpapers/di/dependency_graph.dart';
 import 'package:digital_nomad_wallpapers/di/middleware_injector.dart';
 import 'package:digital_nomad_wallpapers/navigation/navigation_middleware.dart';
+import 'package:digital_nomad_wallpapers/navigation/route_widgets.dart';
 import 'package:digital_nomad_wallpapers/navigation/routes/app_routes.dart';
 import 'package:digital_nomad_wallpapers/navigation/routes/page_routes.dart';
 import 'package:digital_nomad_wallpapers/photodetail/PhotoDetailView.dart';
 import 'package:digital_nomad_wallpapers/photoslist/PhotosListView.dart';
-import 'package:digital_nomad_wallpapers/reducers/app_reducer.dart';
-import 'package:digital_nomad_wallpapers/store/app_state.dart';
+import 'package:digital_nomad_wallpapers/photoslist/data/PhotosRepository.dart';
+import 'package:digital_nomad_wallpapers/photoslist/data/memory/PhotosMemoryCache.dart';
+import 'package:digital_nomad_wallpapers/photoslist/data/network/PhotosApiClient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
-
-import 'data/PhotosRepository.dart';
-import 'navigation/route_widgets.dart';
 
 void main() {
   final middleWare = InjectedMiddleware<DependencyGraph>(
